@@ -60,6 +60,8 @@ public class SeaOfElectrons extends OpMode{
     TouchSensor HangerBase = null;
     TouchSensor HangerTop = null;
 
+    public boolean arm_located = false;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -81,15 +83,7 @@ public class SeaOfElectrons extends OpMode{
         HangerBase = hardwareMap.get(TouchSensor.class, "HBLimit");
         HangerTop = hardwareMap.get(TouchSensor.class, "HTLimit");
 
-
-        while (!HangerBase.isPressed()){
-            arm.setPower(0.5);
-        }
-        arm.setPower(0);
-        arm.setTargetPosition(0);
-        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        arm_located = false;
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData(">", "Robot Ready.  Press START.");    //
@@ -118,29 +112,42 @@ public class SeaOfElectrons extends OpMode{
         double strafe;
         double rotation;
         double extend;
-        if (gamepad2.dpad_up){
-            arm.setTargetPosition(-10147);
-        } else if (gamepad2.dpad_down) {
-            arm.setTargetPosition(0);
+
+        if (arm_located) {
+            if (gamepad2.dpad_up){
+                arm.setTargetPosition(-10147);
+            } else if (gamepad2.dpad_down) {
+                arm.setTargetPosition(0);
+            }
+
+            if ((HangerBase.isPressed() && arm.getTargetPosition() == 0) ||
+                    (HangerTop.isPressed() && arm.getTargetPosition() == -10147))
+            {
+                arm.setPower(0);
+            } else  {
+                arm.setPower(1);
+            }
+
+        } else {
+            arm.setPower(0.5);
+            if (HangerBase.isPressed()) {
+                arm.setPower(0);
+                arm.setTargetPosition(0);
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
         }
-        if ((HangerBase.isPressed() && arm.getTargetPosition() == 0)|| (HangerTop.isPressed()) && arm.getTargetPosition() == -10147){
-            arm.setPower(0);
-        } else  {
-            arm.setPower(1);
-        }
+
 
         // Run wheels in tank mode (note: The joystick goes negative when pushed forward, so negate it)
         forward = gamepad1.left_stick_y;
         strafe = -gamepad1.left_stick_x;
         rotation = -gamepad1.right_stick_x;
 
-
-
         leftFrontDrive.setPower(forward + strafe + rotation);
         leftBackDrive.setPower(forward - strafe + rotation);
         rightFrontDrive.setPower(forward - strafe - rotation);
         rightBackDrive.setPower(forward + strafe - rotation);
-
     }
 
     /*
