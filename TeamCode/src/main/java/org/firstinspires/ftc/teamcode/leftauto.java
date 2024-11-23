@@ -158,17 +158,19 @@ public class leftauto extends LinearOpMode {
         //strafe right so we don't clip the wall while turning
         drive_me(0.5, -0.5, 0.5, -0.5, 0.4);
         // turn to face the bar
-        drive_me(0.5,0.5,-0.5,-0.5,0.76);
-//        // move up to bar
-//        drive_me(-0.5,-0.5,-0.5,-0.5,1);
-//        // extend the arm
-//        arm.setTargetPosition(-10135);
-//        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        while (opModeIsActive() && arm.getTargetPosition() >= -10147 && !HangerTop.isPressed()) {
-//            arm.setPower(.75);
-//        }
-//        arm.setPower(0);
+        drive_me(0.5,0.5,-0.5,-0.5,0.65);
+        // move up to bar
+        drive_me(-0.5,-0.5,-0.5,-0.5,1.25);
+        // extend the arm
+        arm.setTargetPosition(-10135);
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (opModeIsActive() && arm.getTargetPosition() >= -10147 && !HangerTop.isPressed()) {
+            arm.setPower(1);
+        }
+        arm.setPower(0);
+        //move backwards so the arm is touching the 1st rung
+        drive_me(0.3,0.3,0.3,0.3, 0.2);
 
 
 
