@@ -74,8 +74,8 @@ public class SeaOfElectrons extends OpMode{
         rightBackDrive = hardwareMap.get(DcMotor.class, "brdr");
         arm = hardwareMap.get(DcMotor.class, "arm");
 
-        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         arm.setDirection(DcMotor.Direction.REVERSE);
@@ -131,6 +131,7 @@ public class SeaOfElectrons extends OpMode{
         } else {
             arm.setPower(0.5);
             if (HangerBase.isPressed()) {
+                arm_located = true;
                 arm.setPower(0);
                 arm.setTargetPosition(0);
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -148,6 +149,11 @@ public class SeaOfElectrons extends OpMode{
         leftBackDrive.setPower(forward - strafe + rotation);
         rightFrontDrive.setPower(forward - strafe - rotation);
         rightBackDrive.setPower(forward + strafe - rotation);
+
+        telemetry.addData(">", "Robot Ready.  Press START.");
+        telemetry.addData("arm", "%b", arm_located);
+        telemetry.update();
+
     }
 
     /*
