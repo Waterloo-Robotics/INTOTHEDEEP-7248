@@ -119,42 +119,46 @@ public class leftauto extends LinearOpMode {
         drive_me(0,0,0,0, 0.1);
         // first block push to the left into scoring zone
         drive_me(-0.5, 0.5, -0.5, 0.5, 0.85);
-        // wait 0.2 seconds
-        drive_me(0,0,0,0, 0.2);
+        // wait 0.1 seconds
+        drive_me(0,0,0,0, 0.1);
         // move to the right
         drive_me(0.5, -0.5, 0.5, -0.5, 0.69);
         // forward to slightly pass yellow block 1
-        drive_me(-0.5,-0.5,-0.5,-0.5,1.57);
-        // stop 0.5 seconds
-        drive_me(0,0,0,0, 0.5);
+        drive_me(-0.5,-0.5,-0.5,-0.5,1.464);
+        // stop 0.2 seconds
+        drive_me(0,0,0,0, 0.2);
         // move left to grab yellow block 1
-        drive_me(-0.5, 0.5, -0.5, 0.5,0.48);
-        // backwards to put yellow 1 in score zone
-        drive_me(0,0,0,0, 0.5);
+        drive_me(-0.5, 0.5, -0.5, 0.5,0.37);
+        // wait
+        drive_me(0,0,0,0, 0.2);
         // move forward to align with yellow 2
-        drive_me(0.5, 0.5, 0.5, 0.5, 1.57);
+        drive_me(0.5, 0.5, 0.5, 0.5, 1.465);
         // wait 2 seconds
         drive_me(0,0,0,0, 0.2);
         // go forward to slightly pass yellow block 2
-        drive_me(-0.5,-0.5,-0.5,-0.5,1.5);
+        drive_me(-0.5,-0.5,-0.5,-0.5,1.46);
         // move left to align and grab yellow block 2
         drive_me(-0.5, 0.5, -0.5, 0.5, 0.39);
         // move yellow block 2 backwards into scoring zone
-        drive_me(0.5, 0.5, 0.5, 0.5, 1.61);
+        drive_me(0.5, 0.5, 0.5, 0.5, 1.59);
         // pull forward to slightly pass yellow block 3
-        drive_me(-0.5,-0.5,-0.5,-0.5,1.55);
+        drive_me(-0.5,-0.5,-0.5,-0.5,1.44);
         // stop for 0.2
         drive_me(0,0,0,0, 0.2);
         // move left align and get yellow 3
-        drive_me(-0.5, 0.5, -0.5, 0.5, 0.5);
+        drive_me(-0.5, 0.5, -0.5, 0.5, 0.5450);
+        // stop
+        drive_me(0,0,0,0,0.1);
+        // slight readjust
+        drive_me(-0.5,-0.5,0.5,0.5,0.072);
         // move backwards to score yellow 3
-        drive_me(0.5, 0.5, 0.5, 0.5, 1.41);
+        drive_me(0.5, 0.5, 0.5, 0.5, 1.4);
         // strafe left slightly
-        drive_me(-0.5, 0.5, -0.5, 0.5, 0.5);
+//        drive_me(-0.5, 0.5, -0.5, 0.5, 0.5);
         // stop for 0.2
         drive_me(0,0,0,0, 0.2);
         // go forward
-        drive_me(-0.5,-0.5,-0.5,-0.5,1.25);
+        drive_me(-0.5,-0.5,-0.5,-0.5,1.364);
         //strafe right so we don't clip the wall while turning
         drive_me(0.5, -0.5, 0.5, -0.5, 0.4);
         // turn to face the bar

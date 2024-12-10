@@ -79,6 +79,7 @@ public class SeaOfElectrons extends OpMode{
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         arm.setDirection(DcMotor.Direction.REVERSE);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         HangerBase = hardwareMap.get(TouchSensor.class, "HBLimit");
         HangerTop = hardwareMap.get(TouchSensor.class, "HTLimit");
