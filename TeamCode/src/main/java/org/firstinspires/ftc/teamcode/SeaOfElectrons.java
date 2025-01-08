@@ -56,11 +56,7 @@ public class SeaOfElectrons extends OpMode{
     public DcMotor  rightFrontDrive  = null;
     public DcMotor  leftBackDrive  = null;
     public DcMotor  rightBackDrive  = null;
-    public DcMotor  arm = null;
-    TouchSensor HangerBase = null;
-    TouchSensor HangerTop = null;
 
-    public boolean arm_located = false;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -72,19 +68,12 @@ public class SeaOfElectrons extends OpMode{
         rightFrontDrive = hardwareMap.get(DcMotor.class, "RD");
         leftBackDrive = hardwareMap.get(DcMotor.class, "bldr");
         rightBackDrive = hardwareMap.get(DcMotor.class, "brdr");
-        arm = hardwareMap.get(DcMotor.class, "arm");
 
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        arm.setDirection(DcMotor.Direction.REVERSE);
-        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        HangerBase = hardwareMap.get(TouchSensor.class, "HBLimit");
-        HangerTop = hardwareMap.get(TouchSensor.class, "HTLimit");
-
-        arm_located = false;
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData(">", "Robot Ready.  Press START.");    //
@@ -114,33 +103,6 @@ public class SeaOfElectrons extends OpMode{
         double rotation;
         double extend;
 
-        if (arm_located) {
-            if (gamepad2.dpad_up){
-                arm.setTargetPosition(-10147);
-            } else if (gamepad2.dpad_down) {
-                arm.setTargetPosition(0);
-            }
-
-            if ((HangerBase.isPressed() && arm.getTargetPosition() == 0) ||
-                    (HangerTop.isPressed() && arm.getTargetPosition() == -10147))
-            {
-                arm.setPower(0);
-            } else  {
-                arm.setPower(1);
-            }
-
-        } else {
-            arm.setPower(0.5);
-            if (HangerBase.isPressed()) {
-                arm_located = true;
-                arm.setPower(0);
-                arm.setTargetPosition(0);
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
-        }
-
-
         // Run wheels in tank mode (note: The joystick goes negative when pushed forward, so negate it)
         forward = gamepad1.left_stick_y;
         strafe = -gamepad1.left_stick_x;
@@ -152,7 +114,6 @@ public class SeaOfElectrons extends OpMode{
         rightBackDrive.setPower(forward + strafe - rotation);
 
         telemetry.addData(">", "Robot Ready.  Press START.");
-        telemetry.addData("arm", "%b", arm_located);
         telemetry.update();
 
     }
