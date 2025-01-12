@@ -64,7 +64,8 @@ public class SeaOfElectrons extends OpMode{
     public Servo intake_claw = null;
     public Servo intake_claw_orientation = null;
     public Servo intake_claw_rotation = null;
-    public Servo intake_arm_rotation = null;
+    public Servo intake_arm_rotation_right = null;
+    public Servo intake_arm_rotation_left = null;
     public Servo intake_slider = null;
     public Servo scoring_arm_right = null;
     public Servo scoring_arm_left = null;
@@ -87,8 +88,9 @@ public class SeaOfElectrons extends OpMode{
 
         intake_claw = hardwareMap.get(Servo.class, "intake_claw");
         intake_claw_orientation = hardwareMap.get(Servo.class, "intake_claw_orientation");
-//        intake_claw_rotation = hardwareMap.get(Servo.class, "intake_claw_rotation");
-//        intake_arm_rotation = hardwareMap.get(Servo.class, "intake_arm_rotation");
+        intake_claw_rotation = hardwareMap.get(Servo.class, "intake_claw_rotation");
+       intake_arm_rotation_right = hardwareMap.get(Servo.class, "intake_arm_rotation_r");
+        intake_arm_rotation_left = hardwareMap.get(Servo.class, "intake_arm_rotation_l");
 //        intake_slider = hardwareMap.get(Servo.class, "intake_slider");
 //        scoring_arm_right = hardwareMap.get(Servo.class, "scoring_arm_right");
 //        scoring_arm_left = hardwareMap.get(Servo.class, "scoring_arm_left");
@@ -129,7 +131,7 @@ public class SeaOfElectrons extends OpMode{
         double extend;
 
         if (gamepad1.a){
-            home_claw_orientation();
+            straight_intake_arm_rotation();
         } else {
 
         }
@@ -178,6 +180,16 @@ public class SeaOfElectrons extends OpMode{
         intake_claw_orientation.setPosition(0.5);
     }
 
+
+    public void straight_claw_rotation() {
+        intake_claw_rotation.setPosition(0.5);
+    }
+
+    public void straight_intake_arm_rotation() {
+        double position = 0.5;
+        intake_arm_rotation_right.setPosition(position);
+        intake_arm_rotation_left.setPosition(1-position);
+    }
     public void home_intake_slider() {
         intake_slider.setPosition(1);
     }
