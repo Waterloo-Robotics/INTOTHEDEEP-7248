@@ -76,28 +76,28 @@ public class SeaOfElectrons extends OpMode{
      */
     @Override
     public void init() {
-        // Define and Initialize Motors
-        leftFrontDrive  = hardwareMap.get(DcMotor.class, "LD");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "RD");
-        leftBackDrive = hardwareMap.get(DcMotor.class, "bldr");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "brdr");
-
-        rightSlide = hardwareMap.get(DcMotor.class, "R_slide");
-        leftSlide = hardwareMap.get(DcMotor.class, "L_slide");
+//        // Define and Initialize Motors
+//        leftFrontDrive  = hardwareMap.get(DcMotor.class, "LD");
+//        rightFrontDrive = hardwareMap.get(DcMotor.class, "RD");
+//        leftBackDrive = hardwareMap.get(DcMotor.class, "bldr");
+//        rightBackDrive = hardwareMap.get(DcMotor.class, "brdr");
+//
+//        rightSlide = hardwareMap.get(DcMotor.class, "R_slide");
+//        leftSlide = hardwareMap.get(DcMotor.class, "L_slide");
 
         intake_claw = hardwareMap.get(Servo.class, "intake_claw");
-        intake_claw_orientation = hardwareMap.get(Servo.class, "intake_claw_orientation");
-        intake_claw_rotation = hardwareMap.get(Servo.class, "intake_claw_rotation");
-        intake_arm_rotation = hardwareMap.get(Servo.class, "intake_arm_rotation");
-        intake_slider = hardwareMap.get(Servo.class, "intake_slider");
-        scoring_arm_right = hardwareMap.get(Servo.class, "scoring_arm_right");
-        scoring_arm_left = hardwareMap.get(Servo.class, "scoring_arm_left");
-        scoring_claw = hardwareMap.get(Servo.class, "scoring_claw");
+//        intake_claw_orientation = hardwareMap.get(Servo.class, "intake_claw_orientation");
+//        intake_claw_rotation = hardwareMap.get(Servo.class, "intake_claw_rotation");
+//        intake_arm_rotation = hardwareMap.get(Servo.class, "intake_arm_rotation");
+//        intake_slider = hardwareMap.get(Servo.class, "intake_slider");
+//        scoring_arm_right = hardwareMap.get(Servo.class, "scoring_arm_right");
+//        scoring_arm_left = hardwareMap.get(Servo.class, "scoring_arm_left");
+//        scoring_claw = hardwareMap.get(Servo.class, "scoring_claw");
 
-        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+//        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+//        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
+//        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+//        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
 
 
         // Send telemetry message to signify robot waiting;
@@ -128,15 +128,20 @@ public class SeaOfElectrons extends OpMode{
         double rotation;
         double extend;
 
+        if (gamepad1.a){
+            open_intake_claw();
+        } else {
+            close_intake_claw();
+        }
         // Run wheels in tank mode (note: The joystick goes negative when pushed forward, so negate it)
-        forward = gamepad1.left_stick_y;
-        strafe = -gamepad1.left_stick_x;
-        rotation = -gamepad1.right_stick_x;
-
-        leftFrontDrive.setPower(forward + strafe + rotation);
-        leftBackDrive.setPower(forward - strafe + rotation);
-        rightFrontDrive.setPower(forward - strafe - rotation);
-        rightBackDrive.setPower(forward + strafe - rotation);
+//        forward = gamepad1.left_stick_y;
+//        strafe = -gamepad1.left_stick_x;
+//        rotation = -gamepad1.right_stick_x;
+//
+//        leftFrontDrive.setPower(forward + strafe + rotation);
+//        leftBackDrive.setPower(forward - strafe + rotation);
+//        rightFrontDrive.setPower(forward - strafe - rotation);
+//        rightBackDrive.setPower(forward + strafe - rotation);
 
         telemetry.addData(">", "Robot Ready.  Press START.");
         telemetry.update();
@@ -151,12 +156,12 @@ public class SeaOfElectrons extends OpMode{
     }
 
     public void open_intake_claw() {
-        intake_claw.setPosition(0);
+        intake_claw.setPosition(0.25);
     }
 
 
     public void close_intake_claw() {
-        intake_claw.setPosition(1);
+        intake_claw.setPosition(0);
     }
 
 
