@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 /*
@@ -56,6 +57,18 @@ public class SeaOfElectrons extends OpMode{
     public DcMotor  rightFrontDrive  = null;
     public DcMotor  leftBackDrive  = null;
     public DcMotor  rightBackDrive  = null;
+    public DcMotor  rightSlide  = null;
+    public DcMotor  leftSlide  = null;
+
+
+    public Servo intake_claw = null;
+    public Servo intake_claw_orientation = null;
+    public Servo intake_claw_rotation = null;
+    public Servo intake_arm_rotation = null;
+    public Servo intake_slider = null;
+    public Servo scoring_arm_right = null;
+    public Servo scoring_arm_left = null;
+    public Servo scoring_claw = null;
 
 
     /*
@@ -68,6 +81,18 @@ public class SeaOfElectrons extends OpMode{
         rightFrontDrive = hardwareMap.get(DcMotor.class, "RD");
         leftBackDrive = hardwareMap.get(DcMotor.class, "bldr");
         rightBackDrive = hardwareMap.get(DcMotor.class, "brdr");
+
+        rightSlide = hardwareMap.get(DcMotor.class, "R_slide");
+        leftSlide = hardwareMap.get(DcMotor.class, "L_slide");
+
+        intake_claw = hardwareMap.get(Servo.class, "intake_claw");
+        intake_claw_orientation = hardwareMap.get(Servo.class, "intake_claw_orientation");
+        intake_claw_rotation = hardwareMap.get(Servo.class, "intake_claw_rotation");
+        intake_arm_rotation = hardwareMap.get(Servo.class, "intake_arm_rotation");
+        intake_slider = hardwareMap.get(Servo.class, "intake_slider");
+        scoring_arm_right = hardwareMap.get(Servo.class, "scoring_arm_right");
+        scoring_arm_left = hardwareMap.get(Servo.class, "scoring_arm_left");
+        scoring_claw = hardwareMap.get(Servo.class, "scoring_claw");
 
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -123,5 +148,50 @@ public class SeaOfElectrons extends OpMode{
      */
     @Override
     public void stop() {
+    }
+
+    public void open_intake_claw() {
+        intake_claw.setPosition(0);
+    }
+
+
+    public void close_intake_claw() {
+        intake_claw.setPosition(1);
+    }
+
+
+    public void open_scoring_claw() {
+        scoring_claw.setPosition(0);
+    }
+
+
+    public void close_scoring_claw() {
+        scoring_claw.setPosition(1);
+    }
+
+    public void home_claw_orientation() {
+        intake_claw_orientation.setPosition(0.5);
+    }
+
+    public void home_intake_slider() {
+        intake_slider.setPosition(1);
+    }
+
+    public void home_scoring_arm() {
+        double position = 0.5;
+        scoring_arm_left.setPosition(position);
+        scoring_arm_right.setPosition(1 - position);
+    }
+
+    public void transfer_scoring_arm() {
+        double position = 1;
+        scoring_arm_left.setPosition(position);
+        scoring_arm_right.setPosition(1 - position);
+    }
+
+    public void score_scoring_arm() {
+        double position = 0;
+        scoring_arm_left.setPosition(position);
+        scoring_arm_right.setPosition(1 - position);
     }
 }
