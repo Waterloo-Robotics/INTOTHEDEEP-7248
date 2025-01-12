@@ -86,7 +86,7 @@ public class SeaOfElectrons extends OpMode{
 //        leftSlide = hardwareMap.get(DcMotor.class, "L_slide");
 
         intake_claw = hardwareMap.get(Servo.class, "intake_claw");
-//        intake_claw_orientation = hardwareMap.get(Servo.class, "intake_claw_orientation");
+        intake_claw_orientation = hardwareMap.get(Servo.class, "intake_claw_orientation");
 //        intake_claw_rotation = hardwareMap.get(Servo.class, "intake_claw_rotation");
 //        intake_arm_rotation = hardwareMap.get(Servo.class, "intake_arm_rotation");
 //        intake_slider = hardwareMap.get(Servo.class, "intake_slider");
@@ -129,9 +129,9 @@ public class SeaOfElectrons extends OpMode{
         double extend;
 
         if (gamepad1.a){
-            open_intake_claw();
+            home_claw_orientation();
         } else {
-            close_intake_claw();
+
         }
         // Run wheels in tank mode (note: The joystick goes negative when pushed forward, so negate it)
 //        forward = gamepad1.left_stick_y;
