@@ -89,9 +89,9 @@ public class SeaOfElectrons extends OpMode{
         intake_claw = hardwareMap.get(Servo.class, "intake_claw");
         intake_claw_orientation = hardwareMap.get(Servo.class, "intake_claw_orientation");
         intake_claw_rotation = hardwareMap.get(Servo.class, "intake_claw_rotation");
-       intake_arm_rotation_right = hardwareMap.get(Servo.class, "intake_arm_rotation_r");
+        intake_arm_rotation_right = hardwareMap.get(Servo.class, "intake_arm_rotation_r");
         intake_arm_rotation_left = hardwareMap.get(Servo.class, "intake_arm_rotation_l");
-//        intake_slider = hardwareMap.get(Servo.class, "intake_slider");
+        intake_slider = hardwareMap.get(Servo.class, "intake_slider");
 //        scoring_arm_right = hardwareMap.get(Servo.class, "scoring_arm_right");
 //        scoring_arm_left = hardwareMap.get(Servo.class, "scoring_arm_left");
 //        scoring_claw = hardwareMap.get(Servo.class, "scoring_claw");
@@ -131,7 +131,7 @@ public class SeaOfElectrons extends OpMode{
         double extend;
 
         if (gamepad1.a){
-            straight_intake_arm_rotation();
+            home_intake_slider();
         } else {
 
         }
@@ -186,7 +186,7 @@ public class SeaOfElectrons extends OpMode{
     }
 
     public void straight_intake_arm_rotation() {
-        double position = 0.5;
+        double position = 0.2;
         intake_arm_rotation_right.setPosition(position);
         intake_arm_rotation_left.setPosition(1-position);
     }
