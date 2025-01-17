@@ -92,9 +92,9 @@ public class SeaOfElectrons extends OpMode{
         intake_arm_rotation_right = hardwareMap.get(Servo.class, "intake_arm_rotation_r");
         intake_arm_rotation_left = hardwareMap.get(Servo.class, "intake_arm_rotation_l");
         intake_slider = hardwareMap.get(Servo.class, "intake_slider");
-//        scoring_arm_right = hardwareMap.get(Servo.class, "scoring_arm_right");
-//        scoring_arm_left = hardwareMap.get(Servo.class, "scoring_arm_left");
-//        scoring_claw = hardwareMap.get(Servo.class, "scoring_claw");
+        scoring_arm_right = hardwareMap.get(Servo.class, "scoring_arm_right");
+        scoring_arm_left = hardwareMap.get(Servo.class, "scoring_arm_left");
+        scoring_claw = hardwareMap.get(Servo.class, "scoring_claw");
 
 //        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
 //        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -131,9 +131,9 @@ public class SeaOfElectrons extends OpMode{
         double extend;
 
         if (gamepad1.a){
-            home_intake_slider();
+            open_scoring_claw();
         } else {
-
+            close_scoring_claw();
         }
         // Run wheels in tank mode (note: The joystick goes negative when pushed forward, so negate it)
 //        forward = gamepad1.left_stick_y;
@@ -173,7 +173,7 @@ public class SeaOfElectrons extends OpMode{
 
 
     public void close_scoring_claw() {
-        scoring_claw.setPosition(1);
+        scoring_claw.setPosition(0.25);
     }
 
     public void home_claw_orientation() {
