@@ -142,6 +142,11 @@ public class SeaOfElectrons extends OpMode{
         } else {
             close_scoring_claw();
         }
+
+        if (gamepad1.b){
+            this.intake_claw_rotation_intake();
+            this.sub_intake_arm_rotation();
+        }
         // Run wheels in tank mode (note: The joystick goes negative when pushed forward, so negate it)
 //        forward = gamepad1.left_stick_y;
 //        strafe = -gamepad1.left_stick_x;
@@ -217,6 +222,16 @@ public class SeaOfElectrons extends OpMode{
         double position = Constants.SCORING_SCORE;
         scoring_arm_left.setPosition(position);
         scoring_arm_right.setPosition(1 - position);
+    }
+
+    public void sub_intake_arm_rotation() {
+        double position = Constants.INTAKE_ROTATION_SUB;
+        intake_arm_rotation_right.setPosition(position);
+        intake_arm_rotation_left.setPosition(1-position);
+    }
+
+    public void intake_claw_rotation_intake() {
+        intake_claw_rotation.setPosition(Constants.INTAKE_ROTATION_INTAKE);
     }
 
 }

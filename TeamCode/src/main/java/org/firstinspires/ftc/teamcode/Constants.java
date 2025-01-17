@@ -24,4 +24,8 @@ public class Constants {
 
     public static final double SCORING_SCORE = 0;
 
+    public static final double INTAKE_ROTATION_SUB = 0.35;
+
+    public static final double INTAKE_ROTATION_INTAKE = 0.85;
+
 }
