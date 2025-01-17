@@ -12,9 +12,9 @@ public class Constants {
 
     public static final double ORIENTATION_HOME = 0.5;
 
-    public static final double ROTATION_STRAIGHT = 0.5;
+    public static final double INTAKE_CLAW_ROTATION_HOME = 0.5;
 
-    public static final double INTAKE_ARM_STRAIGHT = 0.5;
+    public static final double INTAKE_ROTATION_HOME = 0.5;
 
     public static final double SLIDER_HOME = 1;
 
@@ -26,6 +26,10 @@ public class Constants {
 
     public static final double INTAKE_ROTATION_SUB = 0.35;
 
-    public static final double INTAKE_ROTATION_INTAKE = 0.85;
+    public static final double INTAKE_CLAW_ROTATION_INTAKE = 0.85;
+
+    public static final double INTAKE_ROTATION_INTAKE = 0.275;
+
+    public static final double SLIDER_INTAKE = 0.73;
 
 }

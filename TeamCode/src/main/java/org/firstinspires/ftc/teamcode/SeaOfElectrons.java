@@ -51,6 +51,18 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class SeaOfElectrons extends OpMode{
 
     /* Declare OpMode members. */
+
+    public enum IntakeState {
+        SUB,
+        INTAKE,
+        INTAKE_MANUAL,
+        TRANSFER,
+        HOME,
+        TRAVEL
+    }
+
+    IntakeState intakeState = IntakeState.HOME;
+
     public DcMotor  leftFrontDrive   = null;
     public DcMotor  rightFrontDrive  = null;
     public DcMotor  leftBackDrive  = null;
@@ -143,10 +155,21 @@ public class SeaOfElectrons extends OpMode{
             close_scoring_claw();
         }
 
-        if (gamepad1.b){
-            this.intake_claw_rotation_intake();
-            this.sub_intake_arm_rotation();
+        if (gamepad1.y) {
+            this.close_intake_claw();
         }
+        else {
+            this.open_intake_claw();
+        }
+
+        if (gamepad1.b){
+            intakeState = IntakeState.SUB;
+        }
+        if (gamepad1.x){
+            intakeState = IntakeState.INTAKE;
+        }
+
+        this.updateIntake();
         // Run wheels in tank mode (note: The joystick goes negative when pushed forward, so negate it)
 //        forward = gamepad1.left_stick_y;
 //        strafe = -gamepad1.left_stick_x;
@@ -159,6 +182,60 @@ public class SeaOfElectrons extends OpMode{
 
         telemetry.addData(">", "Robot Ready.  Press START.");
         telemetry.update();
+
+    }
+
+    public void updateIntake() {
+
+        double intake_arm_rotation_position = intake_arm_rotation_right.getPosition();
+        double intake_claw_orientation_position = intake_claw_orientation.getPosition();
+        double intake_slider_position = intake_slider.getPosition();
+
+        switch (intakeState) {
+
+            case HOME:
+                intake_claw.setPosition(Constants.INTAKE_CLOSE);
+                intake_claw_orientation.setPosition(Constants.ORIENTATION_HOME);
+                intake_claw_rotation.setPosition(Constants.INTAKE_CLAW_ROTATION_HOME);
+                intake_slider.setPosition(Constants.SLIDER_HOME);
+                intake_arm_rotation_right.setPosition(Constants.INTAKE_ROTATION_HOME);
+                intake_arm_rotation_left.setPosition(1-Constants.INTAKE_ROTATION_HOME);
+                break;
+
+            case SUB:
+                intake_claw.setPosition(Constants.INTAKE_OPEN);
+                intake_claw_orientation.setPosition(Constants.ORIENTATION_HOME);
+                intake_claw_rotation.setPosition(Constants.INTAKE_CLAW_ROTATION_INTAKE);
+                intake_slider.setPosition(Constants.SLIDER_HOME);
+                intake_arm_rotation_right.setPosition(Constants.INTAKE_ROTATION_SUB);
+                intake_arm_rotation_left.setPosition(1-Constants.INTAKE_ROTATION_SUB);
+                break;
+
+            case INTAKE:
+                intake_claw.setPosition(Constants.INTAKE_OPEN);
+                intake_claw_orientation.setPosition(Constants.ORIENTATION_HOME);
+                intake_claw_rotation.setPosition(Constants.INTAKE_CLAW_ROTATION_INTAKE);
+                intake_slider.setPosition(Constants.SLIDER_INTAKE);
+                intake_arm_rotation_right.setPosition(Constants.INTAKE_ROTATION_INTAKE);
+                intake_arm_rotation_left.setPosition(1-Constants.INTAKE_ROTATION_INTAKE);
+                intakeState = IntakeState.INTAKE_MANUAL;
+                break;
+
+            case INTAKE_MANUAL:
+                intake_arm_rotation_position -= gamepad2.left_stick_y*0.002;
+                intake_claw_orientation_position -= gamepad2.right_stick_x*0.002;
+                if (gamepad2.dpad_right) {
+                    intake_slider_position -= 0.002;
+                } else if (gamepad2.dpad_left) {
+                    intake_slider_position += 0.002;
+                }
+                intake_arm_rotation_right.setPosition(intake_arm_rotation_position);
+                intake_arm_rotation_left.setPosition(1-intake_arm_rotation_position);
+                intake_claw_orientation.setPosition(intake_claw_orientation_position);
+                intake_slider.setPosition(intake_slider_position);
+                break;
+
+        }
 
     }
 
@@ -194,11 +271,11 @@ public class SeaOfElectrons extends OpMode{
 
 
     public void straight_claw_rotation() {
-        intake_claw_rotation.setPosition(Constants.ROTATION_STRAIGHT);
+//        intake_claw_rotation.setPosition(Constants.ROTATION_STRAIGHT);
     }
 
     public void straight_intake_arm_rotation() {
-        double position = Constants.INTAKE_ARM_STRAIGHT;
+        double position = Constants.INTAKE_ROTATION_HOME;
         intake_arm_rotation_right.setPosition(position);
         intake_arm_rotation_left.setPosition(1-position);
     }
@@ -231,7 +308,17 @@ public class SeaOfElectrons extends OpMode{
     }
 
     public void intake_claw_rotation_intake() {
-        intake_claw_rotation.setPosition(Constants.INTAKE_ROTATION_INTAKE);
+        intake_claw_rotation.setPosition(Constants.INTAKE_CLAW_ROTATION_INTAKE);
+    }
+
+    public void intake_claw_arm_rotation (){
+        double position = Constants.INTAKE_ROTATION_INTAKE;
+        intake_arm_rotation_right.setPosition(position);
+        intake_arm_rotation_left.setPosition(1-position);
+    }
+
+    public void intake_slider_intake(){
+        intake_slider.setPosition(Constants.SLIDER_INTAKE);
     }
 
 }
