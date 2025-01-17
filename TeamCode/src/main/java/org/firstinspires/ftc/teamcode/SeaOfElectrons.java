@@ -32,9 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 
 /*
  * This OpMode executes a Tank Drive control TeleOp a direct drive robot
@@ -95,6 +93,15 @@ public class SeaOfElectrons extends OpMode{
         scoring_arm_right = hardwareMap.get(Servo.class, "scoring_arm_right");
         scoring_arm_left = hardwareMap.get(Servo.class, "scoring_arm_left");
         scoring_claw = hardwareMap.get(Servo.class, "scoring_claw");
+
+        this.close_intake_claw();
+        this.close_scoring_claw();
+        this.home_claw_orientation();
+        this.straight_claw_rotation();
+        this.straight_intake_arm_rotation();
+        this.home_intake_slider();
+        this.home_scoring_arm();
+
 
 //        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
 //        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -158,57 +165,58 @@ public class SeaOfElectrons extends OpMode{
     }
 
     public void open_intake_claw() {
-        intake_claw.setPosition(0.25);
+        intake_claw.setPosition(Constants.INTAKE_OPEN);
     }
 
 
     public void close_intake_claw() {
-        intake_claw.setPosition(0);
+        intake_claw.setPosition(Constants.INTAKE_CLOSE);
     }
 
 
     public void open_scoring_claw() {
-        scoring_claw.setPosition(0);
+        scoring_claw.setPosition(Constants.SCORING_OPEN);
     }
 
 
     public void close_scoring_claw() {
-        scoring_claw.setPosition(0.25);
+        scoring_claw.setPosition(Constants.SCORING_CLOSE);
     }
 
     public void home_claw_orientation() {
-        intake_claw_orientation.setPosition(0.5);
+        intake_claw_orientation.setPosition(Constants.ORIENTATION_HOME);
     }
 
 
     public void straight_claw_rotation() {
-        intake_claw_rotation.setPosition(0.5);
+        intake_claw_rotation.setPosition(Constants.ROTATION_STRAIGHT);
     }
 
     public void straight_intake_arm_rotation() {
-        double position = 0.2;
+        double position = Constants.INTAKE_ARM_STRAIGHT;
         intake_arm_rotation_right.setPosition(position);
         intake_arm_rotation_left.setPosition(1-position);
     }
     public void home_intake_slider() {
-        intake_slider.setPosition(1);
+        intake_slider.setPosition(Constants.SLIDER_HOME);
     }
 
     public void home_scoring_arm() {
-        double position = 0.5;
+        double position = Constants.ARM_HOME;
         scoring_arm_left.setPosition(position);
         scoring_arm_right.setPosition(1 - position);
     }
 
     public void transfer_scoring_arm() {
-        double position = 1;
+        double position = Constants.SCORING_ARM_TRANSFER;
         scoring_arm_left.setPosition(position);
         scoring_arm_right.setPosition(1 - position);
     }
 
     public void score_scoring_arm() {
-        double position = 0;
+        double position = Constants.SCORING_SCORE;
         scoring_arm_left.setPosition(position);
         scoring_arm_right.setPosition(1 - position);
     }
+
 }
