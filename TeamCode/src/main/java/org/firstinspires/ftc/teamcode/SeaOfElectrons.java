@@ -61,7 +61,14 @@ public class SeaOfElectrons extends OpMode{
         TRAVEL
     }
 
+    public enum ClawState {
+        OPEN,
+        CLOSED
+    }
+
     IntakeState intakeState = IntakeState.HOME;
+    ClawState intakeClawState = ClawState.CLOSED;
+    ClawState scoringClawState = ClawState.CLOSED;
 
     public DcMotor  leftFrontDrive   = null;
     public DcMotor  rightFrontDrive  = null;
@@ -80,6 +87,8 @@ public class SeaOfElectrons extends OpMode{
     public Servo scoring_arm_right = null;
     public Servo scoring_arm_left = null;
     public Servo scoring_claw = null;
+
+    public boolean isIntakeClawPressed = false;
 
 
     /*
@@ -155,18 +164,39 @@ public class SeaOfElectrons extends OpMode{
             close_scoring_claw();
         }
 
-        if (gamepad1.y) {
-            this.close_intake_claw();
-        }
-        else {
-            this.open_intake_claw();
+        if (gamepad1.right_bumper) {
+
+            if (!isIntakeClawPressed) {
+
+                if (intakeClawState == ClawState.OPEN) {
+                    intakeClawState = ClawState.CLOSED;
+                } else {
+                    intakeClawState = ClawState.OPEN;
+                }
+
+            }
+
+            isIntakeClawPressed = true;
+
+        } else {
+            isIntakeClawPressed = false;
         }
 
         if (gamepad1.b){
             intakeState = IntakeState.SUB;
+            intakeClawState = ClawState.OPEN;
         }
         if (gamepad1.x){
             intakeState = IntakeState.INTAKE;
+            intakeClawState = ClawState.OPEN;
+        }
+        if (gamepad1.dpad_right) {
+            intakeState = IntakeState.TRANSFER;
+            intakeClawState = ClawState.CLOSED;
+        }
+        if (gamepad1.guide) {
+            intakeState = IntakeState.HOME;
+            intakeClawState = ClawState.CLOSED;
         }
 
         this.updateIntake();
@@ -191,10 +221,15 @@ public class SeaOfElectrons extends OpMode{
         double intake_claw_orientation_position = intake_claw_orientation.getPosition();
         double intake_slider_position = intake_slider.getPosition();
 
+        if (intakeClawState == ClawState.OPEN) {
+            intake_claw.setPosition(Constants.INTAKE_OPEN);
+        } else {
+            intake_claw.setPosition(Constants.INTAKE_CLOSE);
+        }
+
         switch (intakeState) {
 
             case HOME:
-                intake_claw.setPosition(Constants.INTAKE_CLOSE);
                 intake_claw_orientation.setPosition(Constants.ORIENTATION_HOME);
                 intake_claw_rotation.setPosition(Constants.INTAKE_CLAW_ROTATION_HOME);
                 intake_slider.setPosition(Constants.SLIDER_HOME);
@@ -203,7 +238,6 @@ public class SeaOfElectrons extends OpMode{
                 break;
 
             case SUB:
-                intake_claw.setPosition(Constants.INTAKE_OPEN);
                 intake_claw_orientation.setPosition(Constants.ORIENTATION_HOME);
                 intake_claw_rotation.setPosition(Constants.INTAKE_CLAW_ROTATION_INTAKE);
                 intake_slider.setPosition(Constants.SLIDER_HOME);
@@ -212,7 +246,6 @@ public class SeaOfElectrons extends OpMode{
                 break;
 
             case INTAKE:
-                intake_claw.setPosition(Constants.INTAKE_OPEN);
                 intake_claw_orientation.setPosition(Constants.ORIENTATION_HOME);
                 intake_claw_rotation.setPosition(Constants.INTAKE_CLAW_ROTATION_INTAKE);
                 intake_slider.setPosition(Constants.SLIDER_INTAKE);
@@ -233,6 +266,14 @@ public class SeaOfElectrons extends OpMode{
                 intake_arm_rotation_left.setPosition(1-intake_arm_rotation_position);
                 intake_claw_orientation.setPosition(intake_claw_orientation_position);
                 intake_slider.setPosition(intake_slider_position);
+                break;
+
+            case TRANSFER:
+                intake_claw_orientation.setPosition(Constants.ORIENTATION_HOME);
+                intake_claw_rotation.setPosition(Constants.INTAKE_CLAW_ROTATION_TRANSFER);
+                intake_slider.setPosition(Constants.SLIDER_TRANSFER);
+                intake_arm_rotation_right.setPosition(Constants.INTAKE_ROTATION_HOME);
+                intake_arm_rotation_left.setPosition(1-Constants.INTAKE_ROTATION_HOME);
                 break;
 
         }
@@ -271,7 +312,7 @@ public class SeaOfElectrons extends OpMode{
 
 
     public void straight_claw_rotation() {
-//        intake_claw_rotation.setPosition(Constants.ROTATION_STRAIGHT);
+        intake_claw_rotation.setPosition(Constants.INTAKE_CLAW_ROTATION_HOME);
     }
 
     public void straight_intake_arm_rotation() {

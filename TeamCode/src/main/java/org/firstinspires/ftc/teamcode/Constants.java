@@ -32,4 +32,8 @@ public class Constants {
 
     public static final double SLIDER_INTAKE = 0.73;
 
+    public static final double SLIDER_TRANSFER = 0.82;
+
+    public static final double INTAKE_CLAW_ROTATION_TRANSFER = 0.15;
+
 }
